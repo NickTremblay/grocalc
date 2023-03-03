@@ -9,7 +9,7 @@ Nick Tremblay
 I'm not currently hosting this project publically. To recreate this project locally, complete the following steps:\
 0) Install git and nodejs/npm if you don't already have them
 1) Open your system's native command line and navigate to the folder you wish to be the parent of the repository 
-2) Run the following in the command line:\ 
+2) Run the following in the command line:\
 `git clone https://github.com/NickTremblay/grocalc.git`\
 `cd ./grocalc`\
 `npm i`
