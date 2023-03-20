@@ -1,6 +1,6 @@
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, List, ListItem, ListItemText, TextField, IconButton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Roomate from "../types/Roomate";
 import SaveRoomates from "../util/SaveRoomates";
 
@@ -47,7 +47,6 @@ const AddRoomateModal = (props: Props) => {
         if(isNameInputValueValid && nameInputValue !== ""){ 
             addRoomate(nameInputValue);
             setRoomates(updatedRoomates);
-            SaveRoomates(updatedRoomates);
             setNameInputValue("");
             setIsNameInputValueValid(true);
         }
@@ -60,6 +59,10 @@ const AddRoomateModal = (props: Props) => {
             setNameInputValue("");
         }
     }
+
+    useEffect(() => { 
+        SaveRoomates(updatedRoomates);
+    }, [updatedRoomates])
 
     return (
         <Dialog
