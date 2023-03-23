@@ -11,7 +11,8 @@ interface Props {
     setIsOpen: (isOpen: boolean) => void; 
 }
 
-const AddRoomateModal = (props: Props) => {
+// Modal to add and delete roomates. Changes persisted to local storage. 
+const UpdateRoomatesModal = (props: Props) => {
     const {isOpen, setIsOpen, roomates, setRoomates} = props;
     const [updatedRoomates, setUpdatedRoomates] = useState(roomates);
     const [nameInputValue, setNameInputValue] = useState("");
@@ -114,4 +115,4 @@ const AddRoomateModal = (props: Props) => {
 
 }
 
-export default AddRoomateModal;
+export default UpdateRoomatesModal;
