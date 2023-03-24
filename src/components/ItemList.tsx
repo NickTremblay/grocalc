@@ -1,21 +1,29 @@
-import { List, ListItemText, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import React from "react";
+import { IconButton, List, ListItemText, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import React, { useEffect, useState } from "react";
 import Item from "../types/Item";
 import Roomate from "../types/Roomate";
 
 interface Props { 
     items: Item[];
     roomates: Roomate[];
-    setItems: (items: Item[]) => void;
+    deleteItem: (id: number) => void;
 }
 
 const ItemList = (props:Props) => { 
+    const [items, setItems] = useState(props.items);
+
+    useEffect(() => { 
+        setItems(props.items);
+    }, [props.items])
+
     return ( 
         <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Item</TableCell>
+              <TableCell align="left"></TableCell>
+              <TableCell align="right">Item</TableCell>
               <TableCell align="right">Roomates</TableCell>
               <TableCell align="right">Cost</TableCell>
               <TableCell align="right">Quantity</TableCell>
@@ -23,12 +31,18 @@ const ItemList = (props:Props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.items.map((item) => (
+            {items.map((item) => (
               <TableRow
                 key={item.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
+                <TableCell component="th" scope="row" align="left">
+                  <IconButton aria-label="delete" onClick={() => props.deleteItem(item.id)}>
+                      <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+
+                <TableCell align="right">
                   {item.name}
                 </TableCell>
 

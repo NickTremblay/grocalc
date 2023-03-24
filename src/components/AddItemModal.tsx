@@ -35,13 +35,6 @@ const AddItemModal = (props: Props) => {
         setUpdatedItems((oldUpdatedItems) => [...oldUpdatedItems, newItem]);
     }
 
-    // const deleteItem = (id: number) => { 
-    //     setUpdatedItems((oldUpdatedItems) => {
-    //         const newUpdatedItems = oldUpdatedItems.filter((item:Item) => item.id !== id);
-    //         return newUpdatedItems;
-    //     });
-    // }
-
     const updateTextField = (id: AddItemTextFields, value: AddItemTextInputField) => { 
         setTextInputFieldState((oldTextInputFieldState) => { 
             const index = oldTextInputFieldState.findIndex((field) => field.id === id);

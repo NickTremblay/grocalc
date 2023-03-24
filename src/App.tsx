@@ -20,6 +20,13 @@ function App() {
     setIsAddItemDialogueOpen(true);
   }
 
+  const deleteItem = (id: number) => { 
+      setItems((oldItems) => {
+          const newItems = oldItems.filter((item:Item) => item.id !== id);
+          return newItems;
+      });
+  }
+
   return (
     <div className="App">
       <Button onClick={handleEditRoomatesButtonClick}>Edit Roomates</Button>
@@ -40,7 +47,7 @@ function App() {
         setIsOpen={setIsAddItemDialogueOpen} 
       />
 
-      <ItemList items={items} roomates={roomates} setItems={setItems} />
+      <ItemList items={items} roomates={roomates} deleteItem={deleteItem} />
 
     </div>
   );
