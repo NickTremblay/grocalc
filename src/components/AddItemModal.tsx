@@ -55,90 +55,16 @@ const AddItemModal = (props: Props) => {
             const oldFieldState = [...textInputFieldState][i]; 
             const field = textInputFieldState[i].id; 
             const text = textInputFieldState[i].value as string; 
-            let isNumber: boolean; 
 
-            switch(field) { 
+            const [isValid, errorMessage] = validateInputChange(text, field) as [boolean, string];
 
-                case AddItemTextFields.Name: 
-                    // If name is not unique 
-                    if(updatedItems.filter((item) => item.name === text).length > 0) { 
-                        updateTextField(field, {
-                            ...oldFieldState,
-                            isValid: false, 
-                            errorMessage: "Name taken",
-                        });
+            updateTextField(field, {
+                ...oldFieldState,
+                isValid,
+                errorMessage
+            });
 
-                        allInputsValid = false; 
-
-                    } else if(text.length > 32) { 
-                        updateTextField(field, {
-                            ...oldFieldState,
-                            isValid: false, 
-                            errorMessage: "Too long",
-                        });
-
-                        allInputsValid = false; 
-
-                    } else if(text.length === 0) {
-                        updateTextField(field, {
-                            ...oldFieldState,
-                            isValid: false, 
-                            errorMessage: "Name cannot be blank",
-                        });
-
-                        allInputsValid = false; 
-                    }
-                break; 
-
-                case AddItemTextFields.Cost: 
-                    isNumber = !Number.isNaN(parseFloat(text));
-
-                    if(!isNumber){ 
-                        updateTextField(field, {
-                            ...oldFieldState,
-                            isValid: false, 
-                            errorMessage: "Must be a number",
-                        });
-
-                        allInputsValid = false; 
-
-                    } else if(!(getNDecimalPlaces(text) === 0 || getNDecimalPlaces(text) === 2)){
-                        updateTextField(field, {
-                            ...oldFieldState,
-                            isValid: false, 
-                            errorMessage: "Invalid format",
-                        });
-
-                        allInputsValid = false; 
-
-                    }
-                break;
-
-                case AddItemTextFields.Quantity: 
-                    isNumber = !Number.isNaN(parseInt(text))
-
-                    if(!isNumber){ 
-                        updateTextField(field, {
-                            ...oldFieldState,
-                            isValid: false, 
-                            errorMessage: "Must be a number",
-                        });
-
-                        allInputsValid = false; 
-
-                    } else if(getNDecimalPlaces(text) !== 0 || parseInt(text) < 0){
-                        updateTextField(field, {
-                            ...oldFieldState,
-                            isValid: false, 
-                            errorMessage: "Quantity must be a whole, positive number",
-                        });
-
-                        allInputsValid = false; 
-
-                    }
-                break;
-
-            }
+            if(!isValid) allInputsValid = false; 
         }
 
         if(selectedRoomates.length < 1) allInputsValid = false; 
@@ -198,44 +124,24 @@ const AddItemModal = (props: Props) => {
         }  
     }
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, field: AddItemTextFields) => {
-        const oldFieldState  = getTextFieldById(field);
-        const text = event.target.value;
-        let isNumber: boolean;
+    const validateInputChange = (text: string, field: AddItemTextFields) => { 
+        let valid = false;
+        let errorMessage = ""; 
 
-        // TODO: Abstract this out of event handler and overhaul validateAllInputFields()
-        // validateFieldChange(text: string, field: AddItemTextFields) => boolean
+        let isNumber: boolean; 
+        
         switch(field) { 
 
             case AddItemTextFields.Name: 
                 // If name is not unique 
                 if(updatedItems.filter((item) => item.name === text).length > 0) { 
-                    updateTextField(field, {
-                        ...oldFieldState,
-                        isValid: false, 
-                        errorMessage: "Name taken",
-                        value: text,
-                    });
+                    errorMessage = "Name taken"; 
                 } else if(text.length > 32) { 
-                    updateTextField(field, {
-                        ...oldFieldState,
-                        isValid: false, 
-                        errorMessage: "Too long",
-                        value: text,
-                    });
+                    errorMessage =  "Too long";
                 } else if(text.length === 0) {
-                    updateTextField(field, {
-                        ...oldFieldState,
-                        isValid: false, 
-                        errorMessage: "Name cannot be blank",
-                        value: text,
-                    });
-                }else { 
-                    updateTextField(field, {
-                        ...oldFieldState,
-                        value: text,
-                        isValid: true,
-                    });
+                    errorMessage = "Name cannot be blank";
+                } else { 
+                    valid = true; 
                 }
             break; 
 
@@ -243,25 +149,11 @@ const AddItemModal = (props: Props) => {
                 isNumber = !Number.isNaN(parseFloat(text))
 
                 if(!isNumber){ 
-                    updateTextField(field, {
-                        ...oldFieldState,
-                        isValid: false, 
-                        value: text,
-                        errorMessage: "Must be a number",
-                    });
+                    errorMessage = "Must be a number";
                 } else if(!(getNDecimalPlaces(text) === 0 || getNDecimalPlaces(text) === 2)){
-                    updateTextField(field, {
-                        ...oldFieldState,
-                        isValid: false, 
-                        value: text,
-                        errorMessage: "Invalid format",
-                    });
+                    errorMessage = "Invalid format";
                 } else { 
-                    updateTextField(field, {
-                        ...oldFieldState,
-                        value: text,
-                        isValid: true,
-                    });
+                    valid = true; 
                 }
             break;
 
@@ -269,29 +161,30 @@ const AddItemModal = (props: Props) => {
                 isNumber = !Number.isNaN(parseInt(text))
 
                 if(!isNumber){ 
-                    updateTextField(field, {
-                        ...oldFieldState,
-                        isValid: false, 
-                        value: text,
-                        errorMessage: "Must be a number",
-                    });
+                    errorMessage = "Must be a number";
                 } else if(getNDecimalPlaces(text) !== 0 || parseInt(text) < 0){
-                    updateTextField(field, {
-                        ...oldFieldState,
-                        isValid: false, 
-                        value: text,
-                        errorMessage: "Quantity must be a whole, positive number",
-                    });
+                    errorMessage = "Quantity must be a whole, positive number";
                 } else { 
-                    updateTextField(field, {
-                        ...oldFieldState,
-                        value: text,
-                        isValid: true,
-                    });
+                    valid = true; 
                 }
             break;
-
         }
+
+        return [valid, errorMessage]; 
+    }
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, field: AddItemTextFields) => {
+        const text = event.target.value;
+        const oldFieldState = getTextFieldById(field); 
+
+        const [isValid, errorMessage] = validateInputChange(text, field) as [boolean, string];
+
+        updateTextField(field, {
+            ...oldFieldState,
+            isValid,
+            errorMessage,
+            value: text
+        })
     }
 
     useEffect(() => { 
