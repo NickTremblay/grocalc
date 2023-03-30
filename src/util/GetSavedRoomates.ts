@@ -8,7 +8,8 @@ const GetSavedRoomates = () => {
     return savedRoomateNames.map((name) => { 
         let roomate: Roomate = {
             name,
-            balance: 0
+            balance: 0,
+            costs: []
         }
         return roomate;
     }) as Roomate[]; 
