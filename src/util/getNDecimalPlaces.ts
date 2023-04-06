@@ -4,13 +4,13 @@
 // Example: getNDecimalPlaces(3.14) === 2
 
 const getNDecimalPlaces = (n: string) => {
-    if(n === "") return 0;
+  if(n === "") return 0;
 
-    if(Number.isNaN(parseFloat(n))) return -1;
+  if(Number.isNaN(parseFloat(n))) return -1;
 
-    if(!n.includes(".")) return 0; 
+  if(!n.includes(".")) return 0; 
 
-    return n.split(".")[1].length || 0; 
-}
+  return n.split(".")[1].length || 0; 
+};
 
 export default getNDecimalPlaces;

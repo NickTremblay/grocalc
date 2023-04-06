@@ -9,65 +9,64 @@ interface Props {
 }
 
 const RoomatePicker = (props:Props) => { 
-    const {setSelectedRoomates} = props; 
+  const {setSelectedRoomates} = props; 
 
-    const defaultRoomateState = props.roomates.map((roomate) => {
-        return {
-            name: roomate.name,
-            isSelected: true
-        } as RoomateCheckbox;
+  const defaultRoomateState = props.roomates.map((roomate) => {
+    return {
+      name: roomate.name,
+      isSelected: true
+    } as RoomateCheckbox;
+  });
+
+  const [roomateCheckboxes, setRoomateCheckboxes] = useState(defaultRoomateState);
+
+  const toggleRoomate = (roomateName: string) => { 
+    setRoomateCheckboxes((oldRoomateCheckboxes) => { 
+      const index = oldRoomateCheckboxes.findIndex((checkbox) => checkbox.name === roomateName);
+      if(index === -1) return oldRoomateCheckboxes;
+
+      const newRoomateCheckboxes = [...oldRoomateCheckboxes]; 
+      newRoomateCheckboxes[index] = {
+        ...newRoomateCheckboxes[index],
+        isSelected: !newRoomateCheckboxes[index].isSelected
+      }; 
+
+      return newRoomateCheckboxes;
     });
+  };
 
-    const [roomateCheckboxes, setRoomateCheckboxes] = useState(defaultRoomateState)
-
-    const toggleRoomate = (roomateName: string) => { 
-        setRoomateCheckboxes((oldRoomateCheckboxes) => { 
-            const index = oldRoomateCheckboxes.findIndex((checkbox) => checkbox.name === roomateName);
-            if(index === -1) return oldRoomateCheckboxes;
-
-            const newRoomateCheckboxes = [...oldRoomateCheckboxes]; 
-            newRoomateCheckboxes[index] = {
-                ...newRoomateCheckboxes[index],
-                isSelected: !newRoomateCheckboxes[index].isSelected
-            }; 
-
-            return newRoomateCheckboxes;
-        })
-    }
-
-    useEffect(() => { 
-        const newSelectedRoomates = 
+  useEffect(() => { 
+    const newSelectedRoomates = 
         roomateCheckboxes.filter((roomateCheckbox) => roomateCheckbox.isSelected)
-        .map((roomateCheckbox) => roomateCheckbox.name);
+          .map((roomateCheckbox) => roomateCheckbox.name);
 
-        setSelectedRoomates(newSelectedRoomates);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [roomateCheckboxes])
+    setSelectedRoomates(newSelectedRoomates);
+  }, [roomateCheckboxes]);
 
-    return (
-        <FormGroup>
-            <List>
-                {
-                    roomateCheckboxes.map((roomateCheckbox: RoomateCheckbox) => { 
-                        return (
-                        <ListItem key={roomateCheckbox.name}>
+  return (
+    <FormGroup>
+      <List>
+        {
+          roomateCheckboxes.map((roomateCheckbox: RoomateCheckbox) => { 
+            return (
+              <ListItem key={roomateCheckbox.name}>
 
-                            <FormControlLabel 
-                            control={
-                                <Checkbox 
-                                    checked={roomateCheckbox.isSelected}
-                                    onChange={() => toggleRoomate(roomateCheckbox.name)} 
-                                />} 
-                            label={roomateCheckbox.name} 
-                            />
+                <FormControlLabel 
+                  control={
+                    <Checkbox 
+                      checked={roomateCheckbox.isSelected}
+                      onChange={() => toggleRoomate(roomateCheckbox.name)} 
+                    />} 
+                  label={roomateCheckbox.name} 
+                />
 
-                        </ListItem>
-                        )
-                    })
-                }
-            </List> 
-        </FormGroup>
-    )
-}
+              </ListItem>
+            );
+          })
+        }
+      </List> 
+    </FormGroup>
+  );
+};
 
 export default RoomatePicker;

@@ -1,13 +1,13 @@
-import { Button } from '@mui/material';
-import React, { useState } from 'react';
-import ItemList from './components/ItemList';
-import AddItemModal from './components/AddItemModal';
-import UpdateRoomatesModal from './components/UpdateRoomatesModal';
-import Item from './types/Item';
-import GetSavedRoomates from './util/GetSavedRoomates';
-import TotalPage from './components/TotalPage';
-import Cost from './types/Cost';
-import Roomate from './types/Roomate';
+import { Button } from "@mui/material";
+import React, { useState } from "react";
+import ItemList from "./components/ItemList";
+import AddItemModal from "./components/AddItemModal";
+import UpdateRoomatesModal from "./components/UpdateRoomatesModal";
+import Item from "./types/Item";
+import GetSavedRoomates from "./util/GetSavedRoomates";
+import TotalPage from "./components/TotalPage";
+import Cost from "./types/Cost";
+import Roomate from "./types/Roomate";
 
 function App() {
   const [isAddRoomateDialogueOpen, setIsAddRoomateDialogueOpen] = useState(false);
@@ -23,60 +23,60 @@ function App() {
     let newRoomates: Roomate[] = [];
 
     setRoomates((oldRoomates) => { 
-        newRoomates = [...oldRoomates];
+      newRoomates = [...oldRoomates];
 
-        const targetRoomateIndex = oldRoomates.findIndex((roomate) => roomate.name === roomateName); 
+      const targetRoomateIndex = oldRoomates.findIndex((roomate) => roomate.name === roomateName); 
 
-        // If roomateName valid 
-        if(targetRoomateIndex > -1) {
-            newRoomates[targetRoomateIndex] = {
-                ...oldRoomates[targetRoomateIndex], 
-                balance: oldRoomates[targetRoomateIndex].balance + balanceIncrement,
-                costs: [...oldRoomates[targetRoomateIndex].costs, ...newCosts]
-            }
-        }
-
-        return newRoomates; 
-    });
-  }
-
-const addCosts = (costs: Cost[]) => { 
-      // Update balance and costs of each roomate on item 
-      for(let i = 0; i < costs.length; i++){ 
-          let cost = costs[i]; 
-          updateRoomate(cost.roomate, cost.amount, [cost])
+      // If roomateName valid 
+      if(targetRoomateIndex > -1) {
+        newRoomates[targetRoomateIndex] = {
+          ...oldRoomates[targetRoomateIndex], 
+          balance: oldRoomates[targetRoomateIndex].balance + balanceIncrement,
+          costs: [...oldRoomates[targetRoomateIndex].costs, ...newCosts]
+        };
       }
 
-      // Append new costs to state 
-      setCosts((oldCosts) => { 
-          return [...oldCosts, ...costs];
-      });
-  }
+      return newRoomates; 
+    });
+  };
+
+  const addCosts = (costs: Cost[]) => { 
+    // Update balance and costs of each roomate on item 
+    for(let i = 0; i < costs.length; i++){ 
+      const cost = costs[i]; 
+      updateRoomate(cost.roomate, cost.amount, [cost]);
+    }
+
+    // Append new costs to state 
+    setCosts((oldCosts) => { 
+      return [...oldCosts, ...costs];
+    });
+  };
 
   const handleEditRoomatesButtonClick = () => { 
     setIsAddRoomateDialogueOpen(true);
-  }
+  };
 
   const handleAddItemButtonClick = () => { 
     setIsAddItemDialogueOpen(true);
-  }
+  };
 
   const handleCalculateButtonClick = () => { 
     setIsTotalPageOpen(true);
-  }
+  };
 
   const deleteItem = (id: number) => { 
-      setItems((oldItems) => {
-          const newItems = oldItems.filter((item:Item) => item.id !== id);
-          return newItems;
-      });
-  }
+    setItems((oldItems) => {
+      const newItems = oldItems.filter((item:Item) => item.id !== id);
+      return newItems;
+    });
+  };
 
   if(isTotalPageOpen) return (
     <div className="App">
-        <TotalPage setIsTotalPageOpen={setIsTotalPageOpen} roomates={roomates} items={items} />
+      <TotalPage setIsTotalPageOpen={setIsTotalPageOpen} roomates={roomates} items={items} />
     </div>
-  )
+  );
 
   return (
     <div className="App">
