@@ -64,7 +64,7 @@ const UpdateRoomatesModal = (props: Props) => {
     useEffect(() => { 
         SaveRoomates(updatedRoomates);
         props.setRoomates(updatedRoomates);
-    }, [updatedRoomates])
+    }, [...updatedRoomates])
 
     return (
         <Dialog
