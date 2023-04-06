@@ -1,12 +1,8 @@
 import { Dialog, DialogTitle, DialogContent, List, ListItem, TextField, DialogActions, Button, ListItemText, DialogContentText } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import AddItemTextInputField, { AddItemTextFields, defaultTextInputFieldState } from "../types/AddItemTextField";
-import Item from "../types/Item";
-import Roomate from "../types/Roomate";
-import getNDecimalPlaces from "../util/getNDecimalPlaces";
-import RoomatePicker from "./RoomatePicker";
-import Cost from "../types/Cost";
-import deriveCosts from "../util/deriveCosts";
+import { Item, Cost, defaultTextInputFieldState, AddItemTextFields, AddItemTextInputField, Roomate } from "../types";
+import { deriveCosts, getNDecimalPlaces } from "../util";
+import { RoomatePicker } from ".";
 
 interface Props { 
     items: Item[]; 
@@ -18,7 +14,7 @@ interface Props {
 }
 
 // Modal to add a new item 
-const AddItemModal = (props: Props) => { 
+export const AddItemModal = (props: Props) => { 
   const [roomates, setRoomates] = useState(props.roomates);
 
   const {isOpen, setIsOpen, items, setItems} = props;
@@ -266,5 +262,3 @@ const AddItemModal = (props: Props) => {
     </Dialog>
   );
 };
-
-export default AddItemModal; 

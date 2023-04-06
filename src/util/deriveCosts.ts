@@ -1,8 +1,7 @@
-import Cost from "../types/Cost";
-import Item from "../types/Item";
+import { Item, Cost } from "../types";
 
 // Create Cost instances for each roomate listed on each item and return them
-const deriveCosts = (items: Item[]) => { 
+export const deriveCosts = (items: Item[]) => { 
   const costs = [] as Cost[];
 
   let itemTemp: Item; 
@@ -22,5 +21,3 @@ const deriveCosts = (items: Item[]) => {
 
   return [...costs]; 
 };
-
-export default deriveCosts;

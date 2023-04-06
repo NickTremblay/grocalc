@@ -1,13 +1,8 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
-import ItemList from "./components/ItemList";
-import AddItemModal from "./components/AddItemModal";
-import UpdateRoomatesModal from "./components/UpdateRoomatesModal";
-import Item from "./types/Item";
-import GetSavedRoomates from "./util/GetSavedRoomates";
-import TotalPage from "./components/TotalPage";
-import Cost from "./types/Cost";
-import Roomate from "./types/Roomate";
+import { TotalPage, UpdateRoomatesModal, AddItemModal, ItemList } from "./components";
+import { Item, Cost, Roomate } from "./types";
+import { GetSavedRoomates } from "./util";
 
 function App() {
   const [isAddRoomateDialogueOpen, setIsAddRoomateDialogueOpen] = useState(false);

@@ -3,7 +3,7 @@
 // Example: getNDecimalPlaces(1) === 0 
 // Example: getNDecimalPlaces(3.14) === 2
 
-const getNDecimalPlaces = (n: string) => {
+export const getNDecimalPlaces = (n: string) => {
   if(n === "") return 0;
 
   if(Number.isNaN(parseFloat(n))) return -1;
@@ -12,5 +12,3 @@ const getNDecimalPlaces = (n: string) => {
 
   return n.split(".")[1].length || 0; 
 };
-
-export default getNDecimalPlaces;

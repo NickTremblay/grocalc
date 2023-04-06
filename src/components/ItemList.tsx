@@ -1,8 +1,7 @@
 import { IconButton, List, ListItemText, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useEffect, useState } from "react";
-import Item from "../types/Item";
-import Roomate from "../types/Roomate";
+import {Item, Roomate} from "../types";
 
 interface Props { 
     items: Item[];
@@ -10,7 +9,7 @@ interface Props {
     deleteItem: (id: number) => void;
 }
 
-const ItemList = (props:Props) => { 
+export const ItemList = (props:Props) => { 
   const [items, setItems] = useState(props.items);
 
   useEffect(() => { 
@@ -63,5 +62,3 @@ const ItemList = (props:Props) => {
   );
 
 };
-
-export default ItemList;

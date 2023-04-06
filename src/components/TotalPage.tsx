@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Item from "../types/Item";
-import Roomate from "../types/Roomate";
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, List, ListItemText, ListItem, Button } from "@mui/material";
+import { Item, Roomate } from "../types";
 
 interface Props {
     items: Item[];
@@ -9,7 +8,7 @@ interface Props {
     setIsTotalPageOpen: (isTotalPageOpen: boolean) => void;
 }
 
-const TotalPage = (props: Props) => {
+export const TotalPage = (props: Props) => {
   const [roomates, setRoomates] = useState(props.roomates);
 
   useEffect(() => {
@@ -77,5 +76,3 @@ const TotalPage = (props: Props) => {
     </>
   );
 };
-
-export default TotalPage; 

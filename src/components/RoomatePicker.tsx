@@ -1,14 +1,13 @@
 import { Checkbox, FormControlLabel, FormGroup, List, ListItem } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Roomate from "../types/Roomate";
-import RoomateCheckbox from "../types/RoomateCheckbox";
+import { Roomate, RoomateCheckbox } from "../types";
 
 interface Props { 
     roomates: Roomate[]; 
     setSelectedRoomates: (selectedRoomates: string[]) => void; 
 }
 
-const RoomatePicker = (props:Props) => { 
+export const RoomatePicker = (props:Props) => { 
   const {setSelectedRoomates} = props; 
 
   const defaultRoomateState = props.roomates.map((roomate) => {
@@ -68,5 +67,3 @@ const RoomatePicker = (props:Props) => {
     </FormGroup>
   );
 };
-
-export default RoomatePicker;

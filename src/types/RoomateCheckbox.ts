@@ -1,6 +1,4 @@
-interface RoomateCheckbox { 
+export interface RoomateCheckbox { 
     name: string; 
     isSelected: boolean;
 }
-
-export default RoomateCheckbox;

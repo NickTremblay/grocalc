@@ -1,8 +1,8 @@
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, List, ListItem, ListItemText, TextField, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useEffect, useState } from "react";
-import Roomate from "../types/Roomate";
-import SaveRoomates from "../util/SaveRoomates";
+import { Roomate } from "../types";
+import { SaveRoomates } from "../util";
 
 interface Props { 
     roomates:Roomate[]; 
@@ -12,7 +12,7 @@ interface Props {
 }
 
 // Modal to add and delete roomates. Changes persisted to local storage. 
-const UpdateRoomatesModal = (props: Props) => {
+export const UpdateRoomatesModal = (props: Props) => {
   const {isOpen, setIsOpen, roomates, setRoomates} = props;
   const [updatedRoomates, setUpdatedRoomates] = useState(roomates);
   const [nameInputValue, setNameInputValue] = useState("");
@@ -115,5 +115,3 @@ const UpdateRoomatesModal = (props: Props) => {
   );
 
 };
-
-export default UpdateRoomatesModal;

@@ -4,7 +4,7 @@ export enum AddItemTextFields {
     Quantity
 }
 
-export default interface AddItemTextInputField { 
+export interface AddItemTextInputField { 
     id: AddItemTextFields;
     value: string | number; 
     isValid: boolean; 

@@ -1,8 +1,7 @@
-import Cost from "./Cost";
+import {Cost} from ".";
 
-interface Roomate { 
+export interface Roomate { 
     name: string; 
     balance: number; 
     costs: Cost[];
 }
-export default Roomate; 
