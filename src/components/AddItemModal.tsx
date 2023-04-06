@@ -5,6 +5,8 @@ import Item from "../types/Item";
 import Roomate from "../types/Roomate";
 import getNDecimalPlaces from "../util/getNDecimalPlaces";
 import RoomatePicker from "./RoomatePicker";
+import Cost from "../types/Cost";
+import deriveCosts from "../util/deriveCosts";
 
 interface Props { 
     items: Item[]; 
@@ -12,10 +14,13 @@ interface Props {
     setItems: (items: Item[]) => void; 
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void; 
+    addCosts: (costs: Cost[]) => void; 
 }
 
 // Modal to add a new item 
 const AddItemModal = (props: Props) => { 
+    const [roomates, setRoomates] = useState(props.roomates);
+
     const {isOpen, setIsOpen, items, setItems} = props;
     const [updatedItems, setUpdatedItems] = useState(items);
 
@@ -32,8 +37,13 @@ const AddItemModal = (props: Props) => {
             cost, 
             quantity
         } as Item;
+
         setUpdatedItems((oldUpdatedItems) => [...oldUpdatedItems, newItem]);
+
+        // Generate costs based off item and add them 
+        props.addCosts(deriveCosts([newItem]));
     }
+
 
     const updateTextField = (id: AddItemTextFields, value: AddItemTextInputField) => { 
         setTextInputFieldState((oldTextInputFieldState) => { 
@@ -190,7 +200,11 @@ const AddItemModal = (props: Props) => {
     useEffect(() => { 
         setItems(updatedItems);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [updatedItems])
+    }, [updatedItems]);
+
+    useEffect(() => { 
+        setRoomates(props.roomates);
+    }, [props.roomates]);
 
     return (
         <Dialog
@@ -205,7 +219,7 @@ const AddItemModal = (props: Props) => {
 
             <DialogContent>
 
-                {props.roomates.length > 0 && <List>
+                {roomates.length > 0 && <List>
                 {
                     textInputFieldState.map((field) => (
                         <ListItem key={field.id}>
@@ -227,14 +241,14 @@ const AddItemModal = (props: Props) => {
 
                     <ListItem key={textInputFieldState.length + 2}>
                         <RoomatePicker 
-                            roomates={props.roomates} 
+                            roomates={roomates} 
                             setSelectedRoomates={setSelectedRoomates}
                         />
                     </ListItem>
 
                 </List>}
 
-                {props.roomates.length === 0 && <DialogContentText>Add roomates to begin</DialogContentText>}
+                {roomates.length === 0 && <DialogContentText>Add roomates to begin</DialogContentText>}
 
             </DialogContent>
 
