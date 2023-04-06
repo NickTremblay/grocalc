@@ -63,6 +63,7 @@ const UpdateRoomatesModal = (props: Props) => {
 
     useEffect(() => { 
         SaveRoomates(updatedRoomates);
+        props.setRoomates(updatedRoomates);
     }, [updatedRoomates])
 
     return (
