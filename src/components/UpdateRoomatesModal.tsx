@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, List, ListItem, ListItemText, TextField, IconButton } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, List, ListItem, TextField, IconButton, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useEffect, useState } from "react";
 import { Roomate } from "../types";
@@ -73,9 +73,7 @@ export const UpdateRoomatesModal = (props: Props) => {
       aria-labelledby="alert-dialog-title"
     >
 
-      <DialogTitle id="alert-dialog-title">
-        {"Update Roomates"}
-      </DialogTitle>
+      <DialogTitle id="alert-dialog-title" variant="h5" sx={{color:"primary.main"}}>Update Roomates</DialogTitle>
 
       <DialogContent>
         {/* Display each roomate already added */}
@@ -84,10 +82,10 @@ export const UpdateRoomatesModal = (props: Props) => {
             updatedRoomates.map((roomate:Roomate, i) => { 
               return (
                 <ListItem key={i} disablePadding>
-                  <ListItemText primary={roomate.name} />
                   <IconButton aria-label="delete" onClick={() => deleteRoomate(roomate.name)}>
                     <DeleteIcon />
                   </IconButton>
+                  <Typography variant="body1">{roomate.name}</Typography>
                 </ListItem>
               );
             })
@@ -105,9 +103,12 @@ export const UpdateRoomatesModal = (props: Props) => {
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={handleCloseClick}>Done</Button>
-        <Button onClick={handleAddNewRoomateClick} autoFocus>
-                Add Another Roomate
+        <Button onClick={handleAddNewRoomateClick} variant="contained">
+          <Typography variant="button">Add Another Roomate</Typography>
+        </Button>
+
+        <Button onClick={handleCloseClick} variant="contained">
+          <Typography variant="button">Done</Typography>
         </Button>
       </DialogActions>
 

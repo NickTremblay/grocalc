@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, List, ListItemText, ListItem, Button } from "@mui/material";
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, List, ListItem, Button, Typography } from "@mui/material";
 import { Item, Roomate } from "../types";
 
 interface Props {
@@ -26,7 +26,11 @@ export const TotalPage = (props: Props) => {
             <TableRow>
               <TableCell align="left"></TableCell>
               {
-                roomates.map((roomate) => <TableCell align="left" key={roomate.name}>{roomate.name}</TableCell>)
+                roomates.map((roomate) => (
+                  <TableCell align="left" key={roomate.name}>
+                    <Typography variant="h6" sx={{color:"primary.main"}}>{roomate.name}</Typography>
+                  </TableCell>)
+                )
               }
             </TableRow>
           </TableHead>
@@ -43,12 +47,11 @@ export const TotalPage = (props: Props) => {
                         {roomate.costs.map((cost) => {
                           return (
                             <ListItem key={cost.item.id}>
-                              <ListItemText>{`${cost.item.name} - ${cost.amount.toFixed(2)}`}</ListItemText>
+                              <Typography variant="body1">{`${cost.item.name} - ${cost.amount.toFixed(2)}`}</Typography>
                             </ListItem>
                           );
                         }
                         )}
-
                       </List>
 
                     </TableCell>
@@ -60,10 +63,16 @@ export const TotalPage = (props: Props) => {
             <TableRow
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell align="right">Total: </TableCell>
+              <TableCell align="right">
+                <Typography variant="h6" sx={{color:"primary.main"}}>Total:</Typography>
+              </TableCell>
               {
                 roomates.map((roomate) => { 
-                  return <TableCell align="left" key={roomate.name}>{roomate.balance.toFixed(2)}</TableCell>;
+                  return (
+                    <TableCell align="left" key={roomate.name}>
+                      <Typography variant="body1">{roomate.balance.toFixed(2)}</Typography>
+                    </TableCell>
+                  );
                 })
               }
             </TableRow>
@@ -72,7 +81,7 @@ export const TotalPage = (props: Props) => {
         </Table>
 
       </TableContainer>
-      <Button onClick={() => props.setIsTotalPageOpen(false)}>Home</Button>
+      <Button onClick={() => props.setIsTotalPageOpen(false)} variant="contained"><Typography variant="button">Home</Typography></Button>
     </>
   );
 };

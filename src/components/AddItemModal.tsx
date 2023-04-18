@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, DialogContent, List, ListItem, TextField, DialogActions, Button, ListItemText, DialogContentText } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, DialogContentText, Typography, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Item, Cost, defaultTextInputFieldState, AddItemTextFields, AddItemTextInputField, Roomate } from "../types";
 import { deriveCosts, getNDecimalPlaces } from "../util";
@@ -208,55 +208,58 @@ export const AddItemModal = (props: Props) => {
       aria-labelledby="alert-dialog-title"
     >
 
-      <DialogTitle id="alert-dialog-title">
-        {"Add Item"}
-      </DialogTitle>
+      <DialogTitle id="alert-dialog-title" variant="h5" sx={{color:"primary.main"}}>Add Item</DialogTitle>
 
       <DialogContent>
 
-        {roomates.length > 0 && <List>
-          {
-            textInputFieldState.map((field) => (
-              <ListItem key={field.id}>
-                <TextField 
-                  error={!field.isValid}
-                  label={field.label}
-                  helperText={!field.isValid ? field.errorMessage : null}
-                  onChange={(e) => handleInputChange(e, field.id)}
-                  value={field.value}
-                />
-              </ListItem> 
-            )
-            )
-          }
+        <Grid container>
+          <Grid container item xs={6} direction="column">
 
-          <ListItem key={textInputFieldState.length + 1}>
-            <ListItemText>Roomates</ListItemText>
-          </ListItem>
 
-          <ListItem key={textInputFieldState.length + 2}>
+            {roomates.length > 0 && <>
+              {
+                textInputFieldState.map((field) => (
+                  <TextField key={field.id} 
+                    error={!field.isValid}
+                    label={field.label}
+                    helperText={!field.isValid ? field.errorMessage : null}
+                    onChange={(e) => handleInputChange(e, field.id)}
+                    value={field.value}
+                    sx={{marginTop:"0.5rem"}}
+                  />
+                )
+                )
+              }
+            </>}
+          </Grid>
+         
+          <Grid container item xs={6} direction="column">
             <RoomatePicker 
               roomates={roomates} 
               setSelectedRoomates={setSelectedRoomates}
             />
-          </ListItem>
+          </Grid>
+         
+         
+         
 
-        </List>}
+          {roomates.length === 0 && <DialogContentText variant="body1">Add roomates to begin</DialogContentText>}
 
-        {roomates.length === 0 && <DialogContentText>Add roomates to begin</DialogContentText>}
-
+        </Grid>
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={() => {setIsOpen(false); setTextInputFieldState(defaultTextInputFieldState);}}>
-                Cancel
+        <Button variant="outlined" onClick={() => {setIsOpen(false); setTextInputFieldState(defaultTextInputFieldState);}}>
+          <Typography variant="button">Cancel</Typography>
         </Button>
 
-        <Button onClick={handleAddAnotherItemClick} autoFocus>
-                    Add Another Item
+        <Button variant="contained" onClick={handleAddAnotherItemClick}>
+          <Typography variant="button">Add Another Item</Typography>
         </Button>
 
-        <Button onClick={handleCloseClick}>Done</Button>
+        <Button variant="contained" onClick={handleCloseClick}>
+          <Typography variant="button">Done</Typography>
+        </Button>
       </DialogActions>
 
     </Dialog>

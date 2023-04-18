@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, FormGroup, List, ListItem } from "@mui/material";
+import { Checkbox, FormControlLabel, FormGroup, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Roomate, RoomateCheckbox } from "../types";
 
@@ -44,26 +44,21 @@ export const RoomatePicker = (props:Props) => {
 
   return (
     <FormGroup>
-      <List>
-        {
-          roomateCheckboxes.map((roomateCheckbox: RoomateCheckbox) => { 
-            return (
-              <ListItem key={roomateCheckbox.name}>
-
-                <FormControlLabel 
-                  control={
-                    <Checkbox 
-                      checked={roomateCheckbox.isSelected}
-                      onChange={() => toggleRoomate(roomateCheckbox.name)} 
-                    />} 
-                  label={roomateCheckbox.name} 
-                />
-
-              </ListItem>
-            );
-          })
-        }
-      </List> 
+      {
+        roomateCheckboxes.map((roomateCheckbox: RoomateCheckbox) => { 
+          return (
+            <FormControlLabel key={roomateCheckbox.name}
+              control={
+                <Checkbox 
+                  checked={roomateCheckbox.isSelected}
+                  onChange={() => toggleRoomate(roomateCheckbox.name)} 
+                />} 
+              label={<Typography variant="body1">{roomateCheckbox.name}</Typography>} 
+              sx={{marginLeft:"0.5rem"}}
+            />
+          );
+        })
+      }
     </FormGroup>
   );
 };

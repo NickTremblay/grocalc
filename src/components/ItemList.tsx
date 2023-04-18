@@ -1,4 +1,4 @@
-import { IconButton, List, ListItemText, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Box, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useEffect, useState } from "react";
 import {Item, Roomate} from "../types";
@@ -18,17 +18,19 @@ export const ItemList = (props:Props) => {
 
   return ( 
     <TableContainer>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 650 }}>
+
         <TableHead>
           <TableRow>
             <TableCell align="left"></TableCell>
-            <TableCell align="right">Item</TableCell>
-            <TableCell align="right">Roomates</TableCell>
-            <TableCell align="right">Cost</TableCell>
-            <TableCell align="right">Quantity</TableCell>
-            <TableCell align="right">Total</TableCell>
+            <TableCell align="right"><Typography variant="h6" sx={{color:"primary.main"}}>Item</Typography></TableCell>
+            <TableCell align="right"><Typography variant="h6" sx={{color:"primary.main"}}>Roomates</Typography></TableCell>
+            <TableCell align="right"><Typography variant="h6" sx={{color:"primary.main"}}>Cost</Typography></TableCell>
+            <TableCell align="right"><Typography variant="h6" sx={{color:"primary.main"}}>Quantity</Typography></TableCell>
+            <TableCell align="right"><Typography variant="h6" sx={{color:"primary.main"}}>Total</Typography></TableCell>
           </TableRow>
         </TableHead>
+
         <TableBody>
           {items.map((item) => (
             <TableRow
@@ -42,21 +44,25 @@ export const ItemList = (props:Props) => {
               </TableCell>
 
               <TableCell align="right">
-                {item.name}
+                <Typography variant="body1">{item.name}</Typography>
               </TableCell>
 
-              <TableCell align="right">{
-                item.roomates.length === props.roomates.length ? "Everyone" : <List>{item.roomates.map((roomate) => <ListItemText key={roomate}>{roomate}</ListItemText>)}</List>
-              }</TableCell>
+              <TableCell align="right">
+                {
+                  item.roomates.length === props.roomates.length ? <Typography variant="body1">Everyone</Typography> 
+                    : (<Box>{item.roomates.map((roomate) => <Typography key={roomate} variant="body1">{roomate}</Typography>)}</Box>)
+                }
+              </TableCell>
 
-              <TableCell align="right">{item.cost}</TableCell>
+              <TableCell align="right"><Typography variant="body1">{item.cost}</Typography></TableCell>
 
-              <TableCell align="right">{item.quantity}</TableCell>
+              <TableCell align="right"><Typography variant="body1">{item.quantity}</Typography></TableCell>
                 
-              <TableCell align="right">{item.cost * item.quantity}</TableCell>
+              <TableCell align="right"><Typography variant="body1">{item.cost * item.quantity}</Typography></TableCell>
             </TableRow>
           ))}
         </TableBody>
+
       </Table>
     </TableContainer>
   );

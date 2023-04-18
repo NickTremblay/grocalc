@@ -1,8 +1,9 @@
-import { Button } from "@mui/material";
+import { Box, Button, CssBaseline, ThemeProvider, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { TotalPage, UpdateRoomatesModal, AddItemModal, ItemList } from "./components";
 import { Item, Cost, Roomate } from "./types";
 import { GetSavedRoomates } from "./util";
+import { mainTheme } from "./themes";
 
 function App() {
   const [isAddRoomateDialogueOpen, setIsAddRoomateDialogueOpen] = useState(false);
@@ -104,36 +105,47 @@ function App() {
   };
 
   if(isTotalPageOpen) return (
-    <div className="App">
-      <TotalPage setIsTotalPageOpen={setIsTotalPageOpen} roomates={roomates} items={items} />
-    </div>
+    <ThemeProvider theme={mainTheme}>
+
+      <CssBaseline />
+
+      <div className="App">
+        <TotalPage setIsTotalPageOpen={setIsTotalPageOpen} roomates={roomates} items={items} />
+      </div>
+    </ThemeProvider>
   );
 
   return (
-    <div className="App">
-      <Button onClick={handleEditRoomatesButtonClick}>Edit Roomates</Button>
-      <Button onClick={handleAddItemButtonClick}>Add Item</Button>
+    <div className="App" style={{margin:"0.7rem"}}>
+      <ThemeProvider theme={mainTheme}>
 
-      <UpdateRoomatesModal
-        roomates={roomates}
-        setRoomates={setRoomates}
-        isOpen={isAddRoomateDialogueOpen}
-        setIsOpen={setIsAddRoomateDialogueOpen}
-      />
+        <CssBaseline />
 
-      <AddItemModal
-        items={items} 
-        roomates={roomates}
-        setItems={setItems}
-        isOpen={isAddItemDialogueOpen} 
-        setIsOpen={setIsAddItemDialogueOpen} 
-        addCosts={addCosts}
-      />
+        <Button onClick={handleEditRoomatesButtonClick} variant="outlined"><Typography variant="button">Edit Roomates</Typography></Button>
+        <Box display="inline" sx={{ m: "0.3rem" }} />
+        <Button onClick={handleAddItemButtonClick} variant="outlined"><Typography variant="button">Add Item</Typography></Button>
 
-      <ItemList items={items} roomates={roomates} deleteItem={deleteItem} />
+        <UpdateRoomatesModal
+          roomates={roomates}
+          setRoomates={setRoomates}
+          isOpen={isAddRoomateDialogueOpen}
+          setIsOpen={setIsAddRoomateDialogueOpen}
+        />
 
-      <Button onClick={handleCalculateButtonClick}>Calculate</Button>
+        <AddItemModal
+          items={items} 
+          roomates={roomates}
+          setItems={setItems}
+          isOpen={isAddItemDialogueOpen} 
+          setIsOpen={setIsAddItemDialogueOpen} 
+          addCosts={addCosts}
+        />
 
+        <ItemList items={items} roomates={roomates} deleteItem={deleteItem} />
+
+        {roomates.length > 0 && items.length > 0 && <Button onClick={handleCalculateButtonClick} variant="contained"><Typography variant="button">Calculate</Typography></Button>}
+
+      </ThemeProvider>
     </div>
   );
 }
