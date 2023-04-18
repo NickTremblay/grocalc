@@ -48,6 +48,37 @@ function App() {
     });
   };
 
+  const deleteCostFromRoomate = (roomateName: string, itemId: number) => { 
+    setRoomates((oldRoomates) => {
+      const newRoomates = [...oldRoomates];
+
+      const targetRoomateIndex = oldRoomates.findIndex((roomate) => roomate.name === roomateName); 
+      
+      if(targetRoomateIndex > -1) {
+        newRoomates[targetRoomateIndex] = {
+          ...oldRoomates[targetRoomateIndex], 
+          costs: oldRoomates[targetRoomateIndex].costs.filter((cost) => cost.item.id !== itemId)
+        };
+      }
+
+      return newRoomates;
+    });
+
+  };
+
+  const deleteCostByItem = (item: Item) => { 
+    setCosts((oldCosts) => { 
+      const newCosts = [...oldCosts].filter((cost) => cost.item.id !== item.id);
+
+      for(let i = 0; i < item.roomates.length; i++){ 
+        deleteCostFromRoomate(item.roomates[i], item.id);
+      }
+
+
+      return newCosts; 
+    });
+  };
+
   const handleEditRoomatesButtonClick = () => { 
     setIsAddRoomateDialogueOpen(true);
   };
@@ -61,6 +92,11 @@ function App() {
   };
 
   const deleteItem = (id: number) => { 
+    const item = items.find((item) => item.id === id);
+    if(!item) return; 
+    
+    deleteCostByItem(item);
+
     setItems((oldItems) => {
       const newItems = oldItems.filter((item:Item) => item.id !== id);
       return newItems;
